@@ -20,7 +20,7 @@ class AccountSummaryCell: UITableViewCell {
     let chevronImageView = UIImageView()
     
     static let reuseID = "AccountSummaryCell"
-    static let rowHeight: CGFloat = 100
+    static let rowHeight: CGFloat = 112
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -59,7 +59,7 @@ extension AccountSummaryCell {
         
         balanceAmountLabel.translatesAutoresizingMaskIntoConstraints = false
         balanceAmountLabel.textAlignment = .right
-        balanceAmountLabel.text = "£929,466.63"
+        balanceAmountLabel.attributedText = makeFormattedBalance(pounds: "929,466", pence: "23")
         
         chevronImageView.translatesAutoresizingMaskIntoConstraints = false
         let chevronImage = UIImage(systemName: "chevron.right")!.withTintColor(appColour, renderingMode: .alwaysOriginal)
@@ -92,5 +92,20 @@ extension AccountSummaryCell {
             chevronImageView.topAnchor.constraint(equalToSystemSpacingBelow: divider.bottomAnchor, multiplier: 1),
             trailingAnchor.constraint(equalToSystemSpacingAfter: chevronImageView.trailingAnchor, multiplier: 2),
         ])
+    }
+    
+    private func makeFormattedBalance(pounds: String, pence: String) -> NSMutableAttributedString {
+        let poundSignAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.preferredFont(forTextStyle: .callout), .baselineOffset: 8]
+        let poundAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.preferredFont(forTextStyle: .title1)]
+        let penceAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.preferredFont(forTextStyle: .footnote), .baselineOffset: 8]
+        
+        let rootString = NSMutableAttributedString(string: "£", attributes: poundSignAttributes)
+        let poundString = NSAttributedString(string: pounds, attributes: poundAttributes)
+        let penceString = NSAttributedString(string: pence, attributes: penceAttributes)
+        
+        rootString.append(poundString)
+        rootString.append(penceString)
+        
+        return rootString
     }
 }
