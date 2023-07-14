@@ -10,24 +10,25 @@ import UIKit
 struct CurrencyFormatter {
     
     func makeAttributedCurrency(_ amount: Decimal) -> NSMutableAttributedString {
-        let tuple = breakIntoPoundsAndCents(amount)
+        let tuple = breakIntoPoundsAndPence(amount)
         return makeBalanceAttributed(pounds: tuple.0, pence: tuple.1)
     }
     
     // Converts 929466.23 > "929,466" "23"
-    func breakIntoPoundsAndCents(_ amount: Decimal) -> (String, String) {
+    func breakIntoPoundsAndPence(_ amount: Decimal) -> (String, String) {
         let tuple = modf(amount.doubleValue)
         
-        let pounds = convertDollar(tuple.0)
-        let pence = convertCents(tuple.1)
+        let pounds = convertPound(tuple.0)
+        let pence = convertPence(tuple.1)
         
         return (pounds, pence)
     }
     
     // Converts 929466 > 929,466
-    private func convertDollar(_ dollarPart: Double) -> String {
+    private func convertPound(_ dollarPart: Double) -> String {
         let poundsWithDecimal = poundsFormatted(dollarPart) // "$929,466.00"
         let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "en_GB")
         let decimalSeparator = formatter.decimalSeparator! // "."
         let dollarComponents = poundsWithDecimal.components(separatedBy: decimalSeparator) // "$929,466" "00"
         var pounds = dollarComponents.first! // "$929,466"
@@ -37,7 +38,7 @@ struct CurrencyFormatter {
     }
     
     // Convert 0.23 > 23
-    private func convertCents(_ centPart: Double) -> String {
+    private func convertPence(_ centPart: Double) -> String {
         let pence: String
         if centPart == 0 {
             pence = "00"
@@ -50,6 +51,7 @@ struct CurrencyFormatter {
     // Converts 929466 > $929,466.00
     func poundsFormatted(_ pounds: Double) -> String {
         let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "en_GB")
         formatter.numberStyle = .currency
         formatter.usesGroupingSeparator = true
         
