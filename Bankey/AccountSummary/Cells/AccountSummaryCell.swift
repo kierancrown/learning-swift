@@ -9,6 +9,24 @@ import UIKit
 
 class AccountSummaryCell: UITableViewCell {
     
+    enum AccountType: String {
+        case Banking
+        case CreditCard
+        case Investment
+    }
+    
+    struct ViewModel {
+        let accountType: AccountType
+        let accountName: String
+        let balance: Decimal
+        
+        var balanceAsAttributedString: NSAttributedString {
+            return CurrencyFormatter().makeAttributedCurrency(balance)
+        }
+    }
+    
+    let viewModel: ViewModel? = nil
+    
     let typeLabel = UILabel()
     let divider = UIView()
     let nameLabel = UILabel()
@@ -59,7 +77,6 @@ extension AccountSummaryCell {
         
         balanceAmountLabel.translatesAutoresizingMaskIntoConstraints = false
         balanceAmountLabel.textAlignment = .right
-        balanceAmountLabel.attributedText = makeFormattedBalance(pounds: "929,466", pence: "23")
         
         chevronImageView.translatesAutoresizingMaskIntoConstraints = false
         let chevronImage = UIImage(systemName: "chevron.right")!.withTintColor(appColour, renderingMode: .alwaysOriginal)
@@ -93,19 +110,25 @@ extension AccountSummaryCell {
             trailingAnchor.constraint(equalToSystemSpacingAfter: chevronImageView.trailingAnchor, multiplier: 2),
         ])
     }
-    
-    private func makeFormattedBalance(pounds: String, pence: String) -> NSMutableAttributedString {
-        let poundSignAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.preferredFont(forTextStyle: .callout), .baselineOffset: 8]
-        let poundAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.preferredFont(forTextStyle: .title1)]
-        let penceAttributes: [NSAttributedString.Key: Any] = [.font: UIFont.preferredFont(forTextStyle: .footnote), .baselineOffset: 8]
+}
+
+extension AccountSummaryCell {
+    func configure(with vm: ViewModel) {
         
-        let rootString = NSMutableAttributedString(string: "£", attributes: poundSignAttributes)
-        let poundString = NSAttributedString(string: pounds, attributes: poundAttributes)
-        let penceString = NSAttributedString(string: pence, attributes: penceAttributes)
+        typeLabel.text = vm.accountType.rawValue
+        nameLabel.text = vm.accountName
+        balanceAmountLabel.attributedText = vm.balanceAsAttributedString
         
-        rootString.append(poundString)
-        rootString.append(penceString)
-        
-        return rootString
+        switch vm.accountType {
+            case .Banking:
+                divider.backgroundColor = appColour
+                balanceLabel.text = "Current balance"
+            case .CreditCard:
+                divider.backgroundColor = .systemOrange
+                balanceLabel.text = "Balance"
+            case .Investment:
+                divider.backgroundColor = .systemPurple
+                balanceLabel.text = "Value"
+        }
     }
 }
