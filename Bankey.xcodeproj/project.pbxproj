@@ -27,6 +27,7 @@
 		798F4E282A61D35E00B780BC /* Decimal+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798F4E272A61D35E00B780BC /* Decimal+Utils.swift */; };
 		798F4E2A2A61D39A00B780BC /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798F4E292A61D39A00B780BC /* CurrencyFormatter.swift */; };
 		798F4E392A61DC1300B780BC /* CurrencyFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798F4E382A61DC1300B780BC /* CurrencyFormatterTests.swift */; };
+		79BE32F02A6C74B60062B80F /* ShakeyBellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BE32EF2A6C74B60062B80F /* ShakeyBellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		798F4E292A61D39A00B780BC /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
 		798F4E2F2A61DB6A00B780BC /* BankeyUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BankeyUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		798F4E382A61DC1300B780BC /* CurrencyFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatterTests.swift; sourceTree = "<group>"; };
+		79BE32EF2A6C74B60062B80F /* ShakeyBellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeyBellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 			children = (
 				7934F9C12A5C3E73009AC884 /* AppDelegate.swift */,
 				798F4E1A2A617A7400B780BC /* MainViewController.swift */,
+				79BE32EE2A6C74A30062B80F /* Components */,
 				7934F9D62A5C41F4009AC884 /* Login */,
 				7978AB3C2A5EF2F8009AA427 /* Onboarding */,
 				798F4E1C2A6184EC00B780BC /* AccountSummary */,
@@ -190,6 +193,14 @@
 				798F4E382A61DC1300B780BC /* CurrencyFormatterTests.swift */,
 			);
 			path = BankeyUnitTests;
+			sourceTree = "<group>";
+		};
+		79BE32EE2A6C74A30062B80F /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				79BE32EF2A6C74B60062B80F /* ShakeyBellView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,6 +315,7 @@
 				798F4E142A6089F200B780BC /* DummyViewController.swift in Sources */,
 				791F28282A66B3A900D75A8D /* NSNotificationName.swift in Sources */,
 				7934F9C62A5C3E73009AC884 /* LoginViewController.swift in Sources */,
+				79BE32F02A6C74B60062B80F /* ShakeyBellView.swift in Sources */,
 				798F4E262A61903600B780BC /* AccountSummaryCell.swift in Sources */,
 				7978AB402A5EF7BB009AA427 /* OnboardingViewController.swift in Sources */,
 				798F4E1B2A617A7400B780BC /* MainViewController.swift in Sources */,
