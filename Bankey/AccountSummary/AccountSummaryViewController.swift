@@ -129,7 +129,7 @@ extension AccountSummaryViewController {
                 case .success(let profile):
                     self.profile = profile
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    self.showError(error)
             }
             group.leave()
         }
@@ -140,11 +140,11 @@ extension AccountSummaryViewController {
                 case .success(let accounts):
                     self.accounts = accounts
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    self.showError(error)
             }
             group.leave()
         }
-
+        
         group.notify(queue: .main) {
             self.refreshControl.endRefreshing()
             
@@ -175,6 +175,16 @@ extension AccountSummaryViewController {
                 balance: $0.amount)
         }
     }
+    
+    private func showErrorAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 // MARK: - Actions
@@ -194,5 +204,14 @@ extension AccountSummaryViewController {
         profile = nil
         accounts = []
         isLoaded = false
+    }
+    
+    private func showError(_ error: NetworkError) {
+        switch error {
+            case .decodingError:
+                self.showErrorAlert("Error", message: "We couldn't decode the data. Sorry about that.")
+            case .serverError:
+                self.showErrorAlert("Error", message: "We're having problems connecting to the server. Try again later.")
+        }
     }
 }
